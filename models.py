@@ -6,7 +6,7 @@ from typing import List, Optional
 # Book
 @dataclass
 class Book:
-    book_id: str
+    id: str
     author: str
     title: str
     total_copies: int
@@ -18,7 +18,7 @@ class Book:
 
 @dataclass
 class BorrowedBooks:
-    book_id: str
+    id: str
     borrowed_at: str
 
 
@@ -38,10 +38,20 @@ class Member:
         is_borrowed: bool = False
 
         for book in self.borrowed_books:
-            if book.book_id == book_id:
+            if book.id == book_id:
                 is_borrowed = True
 
         return is_borrowed
 
 # Book Borrowed
-# Book Returned
+@dataclass
+class BorrowRequest:
+    book_id:str
+    member_id: string
+
+# Book Result
+@dataclass
+class BorrowResult:
+    book_id:str
+    member_id:str
+    borrowed_at: datetime 
