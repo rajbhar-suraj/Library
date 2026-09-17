@@ -11,6 +11,7 @@ class Book:
     title: str
     total_copies: int
     available_copies: int
+    rent_price: int
 
     def is_available(self) -> bool:
         return self.available_copies > 0
@@ -19,8 +20,24 @@ class Book:
 @dataclass
 class BorrowedBooks:
     id: str
-    borrowed_at: str
+    book_id: str        # ← add this
+    borrowed_at: datetime
+    is_return: bool
+    id_returned_date: datetime
+    due_date: datetime
+    total_amt: int
 
+
+
+@dataclass
+class Transactions:
+    id: str
+    member_id: str
+    book_id: str
+    is_penalty_applied: bool
+    penalty_amt: int
+    total_amt: int
+    is_return: bool
 
 # Member
 @dataclass
@@ -38,7 +55,7 @@ class Member:
         is_borrowed: bool = False
 
         for book in self.borrowed_books:
-            if book.id == book_id:
+            if book.book_id == book_id and not book.is_return:
                 is_borrowed = True
 
         return is_borrowed
@@ -47,7 +64,7 @@ class Member:
 @dataclass
 class BorrowRequest:
     book_id:str
-    member_id: string
+    member_id: str
 
 # Book Result
 @dataclass
@@ -55,3 +72,6 @@ class BorrowResult:
     book_id:str
     member_id:str
     borrowed_at: datetime 
+    due_date: datetime
+    amt: int
+
