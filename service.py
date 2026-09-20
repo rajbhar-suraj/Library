@@ -1,9 +1,10 @@
 from datetime import datetime, timedelta
-from .models import BorrowRequest, BorrowResult, Transactions, BorrowedBooks
-from .exceptions import (
+from models import BorrowRequest, BorrowResult, Transactions, BorrowedBooks
+from exceptions import (
     BookNotFoundError, MemberNotFoundError,
     MemberNotActiveError, BookNotAvailableError, BookNotBorrowedError
 )
+from repository import MemberRepository as Member_Repo, TransactionRepository as Transaction_Repo, BookRepository as Book_Repo
 import uuid
 
 # Book Borrowed
@@ -21,9 +22,9 @@ import uuid
 class BookService:
 
     def __init__(self, book_repo, member_repo, transaction_repo):
-        self.book_repo = book_repo
-        self.member_repo = member_repo
-        self.transaction_repo = transaction_repo
+        self.book_repo = Book_Repo
+        self.member_repo = Member_Repo
+        self.transaction_repo = Transaction_Repo
 
     def borrow_book(self, request: BorrowRequest) -> BorrowResult:
         # check if that book exist in book repo or not and its available or not
